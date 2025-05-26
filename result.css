@@ -1,0 +1,80 @@
+/* result.css: 結果画面のスタイル */
+
+/* 背景色と全体のフォント設定 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 画面全体の高さ */
+    background-color: #f0f8ff; /* 統一背景色 */
+}
+
+/* 結果表示用の中央コンテナ */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* 結果メッセージ */
+h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+/* ボタン */
+.button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    width: 200px;
+}
+
+/*勝敗の表示*/
+/* 基本スタイル */
+.result-message {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 勝ちの派手スタイル */
+  .win {
+    color: gold;
+    text-shadow: 0 0 8px gold, 0 0 15px orange;
+    /*font-size: 40px;*/
+    animation: glow 1.5s infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 8px gold, 0 0 15px orange;
+    }
+    to {
+      text-shadow: 0 0 20px gold, 0 0 40px orange;
+    }
+  }
+  
+  /* 負けの残念スタイル */
+  .lose {
+    color: #777;
+    /*font-size: 40px;*/
+    font-style: italic;
+    opacity: 0.7;
+    animation: shake 0.3s ease-in-out 3;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  

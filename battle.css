@@ -1,0 +1,189 @@
+/* ======= CSS (前回提案どおり) ======= */
+
+body {
+
+font-family: 'Arial', 'Helvetica', 'Yu Gothic', 'Meiryo', sans-serif;
+
+background-color: #f0f8ff;
+
+margin: 0;
+
+padding: 40px 20px;
+
+display: flex;
+
+justify-content: center;
+
+align-items: flex-start;
+
+min-height: 100vh;
+
+flex-direction: column;
+
+}
+
+h2 {
+
+text-align: center;
+
+font-size: 28px;
+
+margin-bottom: 24px;
+
+}
+
+.battle-container {
+
+display: flex;
+
+justify-content: center;
+
+align-items: flex-start;
+
+gap: 60px;
+
+flex-wrap: wrap;
+
+width: 100%;
+
+max-width: 900px;
+
+margin: 0 auto;
+
+}
+
+.panel {
+
+flex: 1 1 40%;
+
+border: 1px solid #ccc;
+
+padding: 20px;
+
+background-color: #ffffff;
+
+border-radius: 12px;
+
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+text-align: center;
+
+}
+
+.hp-bar {
+
+width: 80%;
+
+height: 20px;
+
+background-color: #ddd;
+
+border-radius: 10px;
+
+margin: 10px auto;
+
+overflow: hidden;
+
+}
+
+.hp-fill {
+
+height: 100%;
+
+width: 100%;
+
+background-color: #4CAF50;
+
+color: white;
+
+line-height: 20px;
+
+font-size: 14px;
+
+text-align: center;
+
+}
+
+.energy-dots {
+
+margin-top: 10px;
+
+}
+
+.dot {
+
+display: inline-block;
+
+width: 16px;
+
+height: 16px;
+
+margin: 0 4px;
+
+border-radius: 50%;
+
+background-color: #ccc;
+
+}
+
+.dot.filled {
+
+background-color: #2196F3;
+
+}
+
+button {
+
+padding: 12px 20px;
+
+font-size: 16px;
+
+font-weight: bold;
+
+background-color: #ffcb05;
+
+color: #2d2d2d;
+
+border: none;
+
+border-radius: 12px;
+
+cursor: pointer;
+
+margin: 8px;
+
+transition: background-color 0.3s, transform 0.2s;
+
+}
+
+button:hover {
+
+background-color: #ffd837;
+
+transform: scale(1.05);
+
+}
+
+button:disabled {
+
+background-color: #aaa;
+
+cursor: not-allowed;
+
+}
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center; /* 中央寄せを追加 */
+}
+.vs-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 0 20px;
+}
+

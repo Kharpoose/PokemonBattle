@@ -1,0 +1,113 @@
+/* 全体の背景と基本レイアウト */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* メインコンテナ */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* タイトル */
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* ポケモン一覧のグリッド表示（5列×4行） */
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    justify-items: center;
+    margin-bottom: 40px;
+}
+
+/* 各ポケモンのカード（正方形） */
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 100px;
+    height: 100px; /* 高さを幅と同じに */
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+    overflow: hidden; /* はみ出し防止 */
+}
+
+.pokemon:hover {
+    transform: scale(1.05);
+    border-color: #999;
+}
+
+/* ポケモン画像 */
+.pokemon img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* ポケモン名 */
+.name {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ゲーム開始ボタン */
+.start-button {
+    /* すでにあるスタイルの例 */
+    font-size: 18px;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none; /* 下線をなくす */
+    /* その他必要なスタイル */
+}
+
+.start-button:hover {
+    background-color: #45a049;
+}
+
+/* 選択されたポケモンカードのスタイル */
+.pokemon.selected {
+    border: 3px solid #FF9900; /* オレンジの枠線 */
+    background-color: #FFF3E0; /* 薄いオレンジ背景 */
+}
+
+.selected {
+    border: 3px solid red;
+    border-radius: 10px;
+}
+
+.start-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    width: 200px;
+}

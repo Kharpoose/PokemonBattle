@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>バトル結果</title>
+    <link rel="stylesheet" href="result.css">
+</head>
+<body>
+    <div class="container">
+        <h2>バトル結果</h2>
+        <div class="result-message" id="resultMessage">ここに勝敗メッセージが入ります</div>
+
+        <div class="pokemon-result">
+            <div>
+                <h3>あなたのポケモン</h3>
+                <img id="playerImage" src="" alt="プレイヤーのポケモン" style="width: 150px; height: auto;">
+                <div class="hp-bar"><div class="hp" id="playerHpBar"></div></div>
+                <div id="playerHpText"></div>
+            </div>
+            <div>
+                <h3>相手のポケモン</h3>
+                <img id="botImage" src="" alt="敵のポケモン" style="width: 150px; height: auto;">
+                <div class="hp-bar"><div class="hp" id="opponentHpBar"></div></div>
+                <div id="opponentHpText"></div>
+            </div>
+        </div>
+
+        <button class="button" onclick="location.href='index.html'">タイトルへ戻る</button>
+        <button class="button" onclick="location.href='battle.html'">もう一度プレイ</button>
+    </div>
+
+    <script>
+        // ページ読み込み時に結果を表示
+        window.onload = function() {
+            // sessionStorage や localStorage に結果を保存しておく
+            const resultData = JSON.parse(sessionStorage.getItem('battleResult'));
+
+            if (resultData) {
+                // 結果メッセージ
+                const resultMessage = document.getElementById('resultMessage');
+                resultMessage.textContent = resultData.resultMessage;
+
+                const playerHp = resultData.player.hp < 0 ? 0 : resultData.player.hp;
+                const botHp = resultData.bot.hp < 0 ? 0 : resultData.bot.hp;
+
+                // プレイヤーの情報
+                document.getElementById('playerImage').src = resultData.player.imageUrl;
+                document.getElementById('playerHpText').textContent = `HP: ${playerHp}`;
+                document.getElementById('playerHpBar').style.width = `${(playerHp / resultData.player.maxHp) * 100}%`;
+
+                // ボットの情報
+                document.getElementById('botImage').src = resultData.bot.imageUrl;
+                document.getElementById('opponentHpText').textContent = `HP: ${botHp} `;
+                document.getElementById('opponentHpBar').style.width = `${(botHp / resultData.bot.maxHp) * 100}%`;
+
+
+
+                if (resultData) {
+                    // 勝敗の文字列は例: "勝利!" や "負け!"
+                    const resultText = resultData.resultMessage;
+
+                    // テキストをセット
+                    resultMessage.textContent = resultText;
+
+                    // クラスをクリアしてから勝敗に合わせてクラス付与
+                    resultMessage.classList.remove('win', 'lose');
+
+                    if (resultText.includes("勝")) {
+                        resultMessage.classList.add('win');
+                        resultMessage.textContent = "🎉 おめでとう！勝利です！🎉";
+                    } else if (resultText.includes("負")) {
+                        resultMessage.classList.add('lose');
+                        resultMessage.textContent = "😢 残念、負けてしまいました...";
+                    }
+                }
+
+
+
+            }
+        }
+    </script>
+</body>
+</html>
