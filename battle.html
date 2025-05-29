@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8" />
-<title>バトル画面</title>
-<link rel="stylesheet" href="battle.css" />
- 
+    <meta charset="UTF-8" />
+    <title>バトル画面</title>
+    <link rel="stylesheet" href="battle.css" />
+
 </head>
- 
- 
+
+
 <body>
-    <h2 class = "title">バトル開始！</h2>
+    <h2 class="title">バトル開始！</h2>
     <div class="battle-container">
         <div class="panel" id="playerPanel">
             <h3>自分のポケモン</h3>
@@ -23,7 +24,7 @@
             <button id="attack2"></button>
             <button id="pass">Pass</button>
         </div>
- 
+
         <div class="panel" id="botPanel">
             <h3>敵のポケモン</h3>
             <p><strong>名前:</strong> <span id="b_name"></span></p>
@@ -32,40 +33,40 @@
             <img id="botImage" src="" alt="敵のポケモン" style="width: 150px; height: auto;">
         </div>
     </div>
-   
+
     <script>
         // 既存の JavaScript コードはそのままでOK
         const player = JSON.parse(sessionStorage.getItem('selectedPokemon'));
         player.energy = 3;
         let isPlayerTurnFirst = Math.random() < 0.5; // trueならプレイヤー先行、falseならボット先行
- 
+
         let bot = null;
- 
+
         function renderPlayer() {
             document.getElementById('p_name').textContent = player.name;
             document.getElementById('p_type').textContent = player.type;
             document.getElementById('p_hp').textContent = player.hp;
             document.getElementById('p_energy').textContent = player.energy;
- 
+
             document.getElementById('attack1').textContent = `${player.attack_1_name} (${player.attack_1_damage} dmg / ${player.attack_1_energy} enerji)`;
             document.getElementById('attack2').textContent = `${player.attack_2_name} (${player.attack_2_damage} dmg / ${player.attack_2_energy} enerji)`;
- 
+
             //属性に基づくボタン色変更
             setButtonColors(player.type);
- 
-              // 💡 画像を表示
+
+            // 💡 画像を表示
             if (player.image_url) {
                 document.getElementById('playerImage').src = player.image_url;
             }
         }
- 
+
         function setButtonColors(type) {
             const attack1Button = document.getElementById('attack1');
             const attack2Button = document.getElementById('attack2');
             const passButton = document.getElementById('pass');
- 
+
             // 属性に基づいて色を設定
-            switch(type) {
+            switch (type) {
                 case 'ほのお':
                     attack1Button.style.backgroundColor = '#FF5733'; // 赤
                     attack2Button.style.backgroundColor = '#FF5733'; // 赤
@@ -92,7 +93,7 @@
                     passButton.style.backgroundColor = '#ffcb05';    // デフォルト
             }
         }
- 
+
         function renderBot() {
             document.getElementById('b_name').textContent = bot.name;
             document.getElementById('b_type').textContent = bot.type;
@@ -105,42 +106,42 @@
                 bot.image_url = getImageUrl(bot.name);
             }
             document.getElementById('botImage').src = bot.image_url;
- 
+
         }
- 
+
         function getImageUrl(name) {
             const imageMap = {
                 "リザードン": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
                 "バシャーモ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/257.png",
-                "ウインディ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
-                "ファイヤー" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png",
-                "エースバーン" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png",
-                "カメックス" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
-                "シャワーズ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
-                "ラグラージ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/260.png",
-                "ゲッコウガ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png",
-                "ミロカロス" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png",
-                "フシギバナ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
-                "ジュカイン" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png",
-                "ナッシー" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png",
-                "ロズレイド" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/407.png",
-                "ゴリランダー" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/812.png",
-                "ピカチュウ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
-                "ライチュウ" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
-                "サンダース" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
-                "エレキブル" : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/466.png",
-                "デンリュウ" : "https://img.pokemondb.net/artwork/large/ampharos.jpg"
-              };
+                "ウインディ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
+                "ファイヤー": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png",
+                "エースバーン": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png",
+                "カメックス": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png",
+                "シャワーズ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
+                "ラグラージ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/260.png",
+                "ゲッコウガ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png",
+                "ミロカロス": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png",
+                "フシギバナ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
+                "ジュカイン": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png",
+                "ナッシー": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png",
+                "ロズレイド": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/407.png",
+                "ゴリランダー": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/812.png",
+                "ピカチュウ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+                "ライチュウ": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png",
+                "サンダース": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
+                "エレキブル": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/466.png",
+                "デンリュウ": "https://img.pokemondb.net/artwork/large/ampharos.jpg"
+            };
             return imageMap[name] || '';
         }
- 
- 
+
+
         function updateStats() {
             document.getElementById('p_hp').textContent = player.hp;
             document.getElementById('p_energy').textContent = player.energy;
             document.getElementById('b_hp').textContent = bot.hp;
         }
- 
+
         function checkEndGame() {
             if (bot.hp <= 0) {
                 alert("勝利! 🎉");
@@ -156,16 +157,16 @@
                 location.href = 'result.html'; //結果画面へ
             }
         }
- 
+
         function disableButtons() {
             document.getElementById('attack1').disabled = true;
             document.getElementById('attack2').disabled = true;
             document.getElementById('pass').disabled = true;
         }
- 
+
         function botTurn() {
             bot.energy += 1;
- 
+
             const attacks = [
                 {
                     name: bot.attack_1_name,
@@ -178,20 +179,20 @@
                     energy: parseInt(bot.attack_2_energy),
                 }
             ];
- 
+
             const possibleAttacks = attacks.filter(a => bot.energy >= a.energy);
- 
+
             if (possibleAttacks.length > 0) {
                 const attack = possibleAttacks[Math.floor(Math.random() * possibleAttacks.length)];
                 alert(`相手の ${bot.name}が${attack.name} が攻撃してきた!`);
-                if(player.type == 'くさ' && bot.type ==  'ほのお' ||
-                    player.type == 'でんき' && bot.type ==  'くさ' ||
-                    player.type == 'みず' && bot.type ==  'でんき' ||
-                    player.type == 'ほのお' && bot.type ==  'みず' ){
-                       
+                if (player.type == 'くさ' && bot.type == 'ほのお' ||
+                    player.type == 'でんき' && bot.type == 'くさ' ||
+                    player.type == 'みず' && bot.type == 'でんき' ||
+                    player.type == 'ほのお' && bot.type == 'みず') {
+
                     bot.energy -= attack.energy;
-                    player.hp -= attack.damage+10;
-                }else{
+                    player.hp -= attack.damage + 10;
+                } else {
                     bot.energy -= attack.energy;
                     player.hp -= attack.damage;
                 }
@@ -199,51 +200,51 @@
                 alert(`相手の ${bot.name} エネルギーを2得た`);
                 bot.energy += 2;
             }
- 
+
             renderPlayer();
             renderBot();
             checkEndGame();
         }
- 
+
         fetch('get_pokemon.php') // nameパラメータを省略してランダムにポケモンを選択
-          .then(res => res.json())
-          .then(data => {
-            console.log('取得したデータ:', data);  // 取得したデータをコンソールに出力
-            if (data.length > 0) {
-                const randomIndex = Math.floor(Math.random() * data.length);
-                bot = data[randomIndex];  // ランダムでポケモンを選択
-                bot.energy = 3;           // ボットのエネルギーを3に設定
-                renderPlayer();           // プレイヤーのポケモンを表示
-                renderBot();              // ボットのポケモンを表示
- 
-                // 先行・後攻をランダムに決定してスタート
-                isPlayerTurnFirst = Math.random() < 0.5;
-                startBattleTurn();
-            } else {
-                alert('ボットポケモンが見つかりませんでした。');
-            }
-          })
-        .catch(err => {
-            alert('ボットのポケモンを読み込めませんでした.');
-            console.error('エラー内容:', err);
-        });
- 
+            .then(res => res.json())
+            .then(data => {
+                console.log('取得したデータ:', data);  // 取得したデータをコンソールに出力
+                if (data.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * data.length);
+                    bot = data[randomIndex];  // ランダムでポケモンを選択
+                    bot.energy = 3;           // ボットのエネルギーを3に設定
+                    renderPlayer();           // プレイヤーのポケモンを表示
+                    renderBot();              // ボットのポケモンを表示
+
+                    // 先行・後攻をランダムに決定してスタート
+                    isPlayerTurnFirst = Math.random() < 0.5;
+                    startBattleTurn();
+                } else {
+                    alert('ボットポケモンが見つかりませんでした。');
+                }
+            })
+            .catch(err => {
+                alert('ボットのポケモンを読み込めませんでした.');
+                console.error('エラー内容:', err);
+            });
+
         document.getElementById('attack1').onclick = function () {
             if (player.energy >= player.attack_1_energy) {
                 alert(`${player.attack_1_name} で攻撃した！`);
-                if(player.type == 'ほのお' && bot.type ==  'くさ' ||
-                player.type == 'くさ' && bot.type ==  'でんき' ||
-                player.type == 'でんき' && bot.type ==  'みず' ||
-                player.type == 'みず' && bot.type ==  'ほのお' ){
+                if (player.type == 'ほのお' && bot.type == 'くさ' ||
+                    player.type == 'くさ' && bot.type == 'でんき' ||
+                    player.type == 'でんき' && bot.type == 'みず' ||
+                    player.type == 'みず' && bot.type == 'ほのお') {
                     player.energy -= parseInt(player.attack_1_energy);
-                    bot.hp -= parseInt(player.attack_1_damage+10);
+                    bot.hp -= parseInt(player.attack_1_damage + 10);
                     player.energy += 1;
                     updateStats();
                     checkEndGame();
                     if (bot.hp > 0) botTurn();
-                   
-                }else{
- 
+
+                } else {
+
                     player.energy -= parseInt(player.attack_1_energy);
                     bot.hp -= parseInt(player.attack_1_damage);
                     player.energy += 1;
@@ -255,44 +256,44 @@
                 alert("十分なエネルギーがありません！");
             }
         };
- 
+
         document.getElementById('attack2').onclick = function () {
             if (player.energy >= player.attack_2_energy) {
                 alert(`${player.attack_2_name} で攻撃した！`);
-                if(player.type == 'ほのお' && bot.type ==  'くさ' ||
-                    player.type == 'くさ' && bot.type ==  'でんき' ||
-                    player.type == 'でんき' && bot.type ==  'みず' ||
-                    player.type == 'みず' && bot.type ==  'ほのお' ){
-                       
-                        player.energy -= parseInt(player.attack_2_energy);
-                        bot.hp -= parseInt(player.attack_2_damage+10);
-                        player.energy += 1;
-                        updateStats();
-                        checkEndGame();
-                        if (bot.hp > 0) botTurn();
-                       
-                    }else{
- 
-                        player.energy -= parseInt(player.attack_2_energy);
-                        bot.hp -= parseInt(player.attack_2_damage);
-                        player.energy += 1;
-                        updateStats();
-                        checkEndGame();
-                        if (bot.hp > 0) botTurn();
-                    }
-            }else {
+                if (player.type == 'ほのお' && bot.type == 'くさ' ||
+                    player.type == 'くさ' && bot.type == 'でんき' ||
+                    player.type == 'でんき' && bot.type == 'みず' ||
+                    player.type == 'みず' && bot.type == 'ほのお') {
+
+                    player.energy -= parseInt(player.attack_2_energy);
+                    bot.hp -= parseInt(player.attack_2_damage + 10);
+                    player.energy += 1;
+                    updateStats();
+                    checkEndGame();
+                    if (bot.hp > 0) botTurn();
+
+                } else {
+
+                    player.energy -= parseInt(player.attack_2_energy);
+                    bot.hp -= parseInt(player.attack_2_damage);
+                    player.energy += 1;
+                    updateStats();
+                    checkEndGame();
+                    if (bot.hp > 0) botTurn();
+                }
+            } else {
                 alert("十分なエネルギーがありません！");
             }
         };
- 
+
         document.getElementById('pass').onclick = function () {
             alert("パスした。エネルギーを2獲得した。");
             player.energy += 2;
             updateStats();
             botTurn();
         };
- 
-       
+
+
         // バトル結果を保存する関数
         function saveBattleResult(resultMessage, player, bot) {
             const resultData = {
@@ -310,12 +311,38 @@
                     imageUrl: bot.image_url
                 }
             };
- 
-            // 追加: 保存後に内容をコンソールに表示
+
             console.log('保存されたバトル結果:', resultData);
             sessionStorage.setItem('battleResult', JSON.stringify(resultData));
+
+            // Kazananı belirleyelim
+            // Örnek: resultMessage içinde "あなたの勝ち" (Sen kazandın) veya "相手の勝ち" (Rakip kazandı) olabilir,
+            // ya da HP durumuna göre kontrol edebilirsin. Basitçe hp’lere bakarak da yapabiliriz:
+
+            let winner = 'rakip'; // default rakip
+            if (player.hp > 0 && bot.hp <= 0) {
+                winner = 'sensin';
+            } else if (bot.hp > 0 && player.hp <= 0) {
+                winner = 'rakip';
+            } else if (player.hp === bot.hp) {
+                winner = 'berabere';  // istersen işleyebilirsin
+            }
+
+            // Burada fetch ile PHP’ye POST isteği gönderiyoruz
+            fetch('save_battle_result.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'winner=' + encodeURIComponent(winner)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('DynamoDB kayıt sonucu:', data);
+                })
+                .catch(error => {
+                    console.error('DynamoDB kayıt hatası:', error);
+                });
         }
- 
+
         //先攻後攻
         function startBattleTurn() {
             if (isPlayerTurnFirst) {
@@ -325,11 +352,9 @@
                 botTurn(); // 相手のターンからスタート
             }
         }
- 
+
     </script>
- 
+
 </body>
- 
+
 </html>
- 
- 

@@ -7,13 +7,13 @@ use Aws\Exception\AwsException;
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// DynamoDB client ayarları
+header('Content-Type: application/json; charset=utf-8');
+
 $client = new DynamoDbClient([
     'region' => 'ap-northeast-3',
     'version' => 'latest',
 ]);
 
-// POST ile gelen kazanan bilgisi
 $winner = $_POST['winner'] ?? null;
 
 if (!$winner || !in_array($winner, ['sensin', 'rakip'])) {
@@ -24,10 +24,7 @@ if (!$winner || !in_array($winner, ['sensin', 'rakip'])) {
 
 $loser = $winner === 'sensin' ? 'rakip' : 'sensin';
 
-// Benzersiz battle_id
-$battleId = uniqid('battle_');
-
-// Zaman damgası
+$battleId = uniqid('battle_', true);
 $timestamp = time();
 
 $item = [
@@ -45,5 +42,6 @@ try {
     echo json_encode(['status' => 'success', 'message' => 'Sonuç DynamoDB\'ye kaydedildi']);
 } catch (AwsException $e) {
     http_response_code(500);
+    error_log($e->getMessage());
     echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
