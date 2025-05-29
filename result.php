@@ -19,7 +19,7 @@ try {
         'TableName' => 'BattleResults',
         'Limit' => 10,
     ]);
-    echo "<h2>Son 10 Maç Sonucu</h2>";
+    echo "<h2>Last 10 match</h2>";
     foreach ($result['Items'] as $item) {
         $winner = $item['winner']['S'];
         $loser = $item['loser']['S'];
@@ -27,6 +27,6 @@ try {
         echo "<p><strong>Time:</strong> $date &nbsp; | &nbsp; <strong>Kazanan:</strong> $winner &nbsp; | &nbsp; <strong>Kaybeden:</strong> $loser</p>";
     }
 } catch (AwsException $e) {
-    echo "Hata: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
 }
 ?>
