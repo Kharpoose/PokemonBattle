@@ -4,44 +4,38 @@ require 'vendor/autoload.php';
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// DynamoDB client ayarları
 $client = new DynamoDbClient([
-    'region' => 'ap-northeast-3', // Osaka bölgesi
+    'region' => 'ap-northeast-3',
     'version' => 'latest',
 ]);
 
-$tableName = 'pokemon_battles';
+// Battle sonucu bilgisi - örnek olarak posttan veya mevcut koddan alabilirsiniz
+$winner = $_POST['winner'] ?? 'rakip';  // 'sensin' veya 'rakip'
+$loser = $winner === 'sensin' ? 'rakip' : 'sensin';
+
+// Benzersiz battle_id oluştur (örn: timestamp + random)
+$battleId = uniqid('battle_');
+
+// Zaman damgası
+$timestamp = time();
+
+$item = [
+    'battle_id' => ['S' => $battleId],
+    'timestamp' => ['N' => (string)$timestamp],
+    'winner' => ['S' => $winner],
+    'loser' => ['S' => $loser],
+];
 
 try {
-    $result = $client->scan([
-        'TableName' => $tableName,
+    $client->putItem([
+        'TableName' => 'BattleResults',
+        'Item' => $item,
     ]);
-
-    echo "<h2>Geçmiş Battle Sonuçları</h2>";
-    echo "<table border='1'>
-            <tr>
-                <th>ID</th>
-                <th>Kazanan</th>
-                <th>Kaybeden</th>
-                <th>Tarih</th>
-            </tr>";
-
-    foreach ($result['Items'] as $item) {
-        $id = $item['id']['S'];
-        $winner = $item['winner']['S'];
-        $loser = $item['loser']['S'];
-        $date = $item['date']['S'];
-
-        echo "<tr>
-                <td>$id</td>
-                <td>$winner</td>
-                <td>$loser</td>
-                <td>$date</td>
-              </tr>";
-    }
-
-    echo "</table>";
-
+    echo json_encode(['status' => 'success', 'message' => 'Sonuç DynamoDB\'ye kaydedildi']);
 } catch (AwsException $e) {
-    echo "Hata: " . $e->getMessage();
+    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
-?>
