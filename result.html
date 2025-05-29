@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>バトル結果</title>
     <link rel="stylesheet" href="result.css">
 </head>
+
 <body>
     <div class="container">
         <h2>バトル結果</h2>
@@ -14,24 +16,34 @@
             <div>
                 <h3>あなたのポケモン</h3>
                 <img id="playerImage" src="" alt="プレイヤーのポケモン" style="width: 150px; height: auto;">
-                <div class="hp-bar"><div class="hp" id="playerHpBar"></div></div>
+                <div class="hp-bar">
+                    <div class="hp" id="playerHpBar"></div>
+                </div>
                 <div id="playerHpText"></div>
             </div>
             <div>
                 <h3>相手のポケモン</h3>
                 <img id="botImage" src="" alt="敵のポケモン" style="width: 150px; height: auto;">
-                <div class="hp-bar"><div class="hp" id="opponentHpBar"></div></div>
+                <div class="hp-bar">
+                    <div class="hp" id="opponentHpBar"></div>
+                </div>
                 <div id="opponentHpText"></div>
             </div>
+
         </div>
 
         <button class="button" onclick="location.href='index.html'">タイトルへ戻る</button>
         <button class="button" onclick="location.href='battle.html'">もう一度プレイ</button>
+        <button class="button" id="showResultsBtn">Past match</button>
     </div>
 
     <script>
+
+        document.getElementById('showResultsBtn').addEventListener('click', function () {
+            window.open('results.php', '_blank', 'width=600,height=400');
+        });
         // ページ読み込み時に結果を表示
-        window.onload = function() {
+        window.onload = function () {
             // sessionStorage や localStorage に結果を保存しておく
             const resultData = JSON.parse(sessionStorage.getItem('battleResult'));
 
@@ -80,4 +92,5 @@
         }
     </script>
 </body>
+
 </html>
