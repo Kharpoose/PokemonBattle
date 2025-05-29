@@ -1,13 +1,10 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 $client = new DynamoDbClient([
     'region' => 'ap-northeast-3',
@@ -19,14 +16,21 @@ try {
         'TableName' => 'BattleResults',
         'Limit' => 10,
     ]);
-    echo "<h2>Last 10 match</h2>";
-    foreach ($result['Items'] as $item) {
-        $winner = $item['winner']['S'];
-        $loser = $item['loser']['S'];
-        $date = date('Y-m-d H:i:s', $item['timestamp']['N']);
-        echo "<p><strong>Time:</strong> $date &nbsp; | &nbsp; <strong>Kazanan:</strong> $winner &nbsp; | &nbsp; <strong>Kaybeden:</strong> $loser</p>";
+
+    echo "<h2>Son 10 Maç Sonucu</h2>";
+
+    if (empty($result['Items'])) {
+        echo "<p>Henüz kayıt yok.</p>";
+    } else {
+        foreach ($result['Items'] as $item) {
+            $winner = isset($item['winner']['S']) ? $item['winner']['S'] : 'Bilinmiyor';
+            $loser = isset($item['loser']['S']) ? $item['loser']['S'] : 'Bilinmiyor';
+            $timestamp = isset($item['timestamp']['N']) ? (int)$item['timestamp']['N'] : 0;
+            $date = $timestamp > 0 ? date('Y-m-d H:i:s', $timestamp) : 'Tarih yok';
+
+            echo "<p><strong>Zaman:</strong> $date &nbsp; | &nbsp; <strong>Kazanan:</strong> $winner &nbsp; | &nbsp; <strong>Kaybeden:</strong> $loser</p>";
+        }
     }
 } catch (AwsException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Hata: " . $e->getMessage();
 }
-?>
