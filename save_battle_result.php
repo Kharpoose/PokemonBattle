@@ -1,27 +1,26 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// DynamoDB client ayarları
 $client = new DynamoDbClient([
     'region' => 'ap-northeast-3',
     'version' => 'latest',
+    // Eğer IAM rolü yoksa, credentials ekle:
+    // 'credentials' => [
+    //     'key'    => 'AWS_ACCESS_KEY_ID',
+    //     'secret' => 'AWS_SECRET_ACCESS_KEY',
+    // ],
 ]);
 
-// Battle sonucu bilgisi - örnek olarak posttan veya mevcut koddan alabilirsiniz
-$winner = $_POST['winner'] ?? 'rakip';  // 'sensin' veya 'rakip'
+$winner = $_POST['winner'] ?? 'rakip';
 $loser = $winner === 'sensin' ? 'rakip' : 'sensin';
 
-// Benzersiz battle_id oluştur (örn: timestamp + random)
 $battleId = uniqid('battle_');
-
-// Zaman damgası
 $timestamp = time();
 
 $item = [
@@ -38,5 +37,5 @@ try {
     ]);
     echo json_encode(['status' => 'success', 'message' => 'Sonuç DynamoDB\'ye kaydedildi']);
 } catch (AwsException $e) {
-    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+    echo "Hata: " . $e->getAwsErrorMessage();
 }
