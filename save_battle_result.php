@@ -2,31 +2,46 @@
 require 'vendor/autoload.php';
 
 use Aws\DynamoDb\DynamoDbClient;
-use Aws\DynamoDb\Exception\DynamoDbException;
-
-// Benzersiz ID üretmek için
-function uuid() {
-    return bin2hex(random_bytes(16));
-}
+use Aws\Exception\AwsException;
 
 $client = new DynamoDbClient([
-    'region'  => 'ap-northeast-1',  // Tokyo bölgesi
+    'region' => 'ap-northeast-3', // Osaka bölgesi
     'version' => 'latest',
 ]);
 
-$item = [
-    'id'       => ['S' => uuid()],          // Mevcut partition key
-    'winner'   => ['S' => 'ピカチュウ'],     // Yeni alan: kazanan Pokémon
-    'loser'    => ['S' => 'フシギダネ'],     // Yeni alan: kaybeden Pokémon
-    'date'     => ['S' => date('Y-m-d H:i:s')], // Yeni alan: tarih
-];
+$tableName = 'pokemon_battles';
 
 try {
-    $client->putItem([
-        'TableName' => 'pokemon_battles',
-        'Item' => $item
+    $result = $client->scan([
+        'TableName' => $tableName,
     ]);
-    echo "Savaş sonucu başarıyla kaydedildi!";
-} catch (DynamoDbException $e) {
-    echo "HATA: " . $e->getMessage();
+
+    echo "<h2>Geçmiş Battle Sonuçları</h2>";
+    echo "<table border='1'>
+            <tr>
+                <th>ID</th>
+                <th>Kazanan</th>
+                <th>Kaybeden</th>
+                <th>Tarih</th>
+            </tr>";
+
+    foreach ($result['Items'] as $item) {
+        $id = $item['id']['S'];
+        $winner = $item['winner']['S'];
+        $loser = $item['loser']['S'];
+        $date = $item['date']['S'];
+
+        echo "<tr>
+                <td>$id</td>
+                <td>$winner</td>
+                <td>$loser</td>
+                <td>$date</td>
+              </tr>";
+    }
+
+    echo "</table>";
+
+} catch (AwsException $e) {
+    echo "Hata: " . $e->getMessage();
 }
+?>
