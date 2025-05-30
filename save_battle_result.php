@@ -16,13 +16,13 @@ $client = new DynamoDbClient([
 
 $winner = $_POST['winner'] ?? null;
 
-if (!$winner || !in_array($winner, ['sensin', 'rakip'])) {
+if (!$winner || !in_array($winner, ['自分', '相手'])) {
     http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Geçerli bir kazanan belirtmelisiniz ("sensin" veya "rakip")']);
+    echo json_encode(['status' => 'error', 'message' => 'Geçerli bir kazanan belirtmelisiniz ("自分" veya "相手")']);
     exit;
 }
 
-$loser = $winner === 'sensin' ? 'rakip' : 'sensin';
+$loser = $winner === '自分' ? '相手' : '自分';
 
 $battleId = uniqid('battle_', true);
 $timestamp = time();
