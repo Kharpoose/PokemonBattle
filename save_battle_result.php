@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-
+date_default_timezone_set('Asia/Tokyo');
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 
