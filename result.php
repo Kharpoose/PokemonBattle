@@ -17,20 +17,20 @@ try {
         'Limit' => 10,
     ]);
 
-    echo "<h2>Son 10 Maç Sonucu</h2>";
+    echo "<h2>過去10試合の結果</h2>";
 
     if (empty($result['Items'])) {
-        echo "<p>Henüz kayıt yok.</p>";
+        echo "<p>No Record</p>";
     } else {
         foreach ($result['Items'] as $item) {
             $winner = isset($item['winner']['S']) ? $item['winner']['S'] : 'Bilinmiyor';
             $loser = isset($item['loser']['S']) ? $item['loser']['S'] : 'Bilinmiyor';
             $timestamp = isset($item['timestamp']['N']) ? (int)$item['timestamp']['N'] : 0;
-            $date = $timestamp > 0 ? date('Y-m-d H:i:s', $timestamp) : 'Tarih yok';
+            $date = $timestamp > 0 ? date('Y-m-d H:i:s', $timestamp) : 'No Data';
 
-            echo "<p><strong>Zaman:</strong> $date &nbsp; | &nbsp; <strong>Kazanan:</strong> $winner &nbsp; | &nbsp; <strong>Kaybeden:</strong> $loser</p>";
+            echo "<p><strong>バトル開始時間:</strong> $date &nbsp; | &nbsp; <strong>勝者:</strong> $winner &nbsp; | &nbsp; <strong>敗者:</strong> $loser</p>";
         }
     }
 } catch (AwsException $e) {
-    echo "Hata: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
 }
