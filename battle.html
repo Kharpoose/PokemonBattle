@@ -319,11 +319,11 @@
             // Örnek: resultMessage içinde "あなたの勝ち" (Sen kazandın) veya "相手の勝ち" (相手 kazandı) olabilir,
             // ya da HP durumuna göre kontrol edebilirsin. Basitçe hp’lere bakarak da yapabiliriz:
 
-            let winner = '相手'; // default 相手
+            let winner = 'rakip'; // default rakip
             if (player.hp > 0 && bot.hp <= 0) {
-                winner = '自分';
+                winner = 'sensin';
             } else if (bot.hp > 0 && player.hp <= 0) {
-                winner = '相手';
+                winner = 'rakip';
             } else if (player.hp === bot.hp) {
                 winner = 'berabere';  // istersen işleyebilirsin
             }
