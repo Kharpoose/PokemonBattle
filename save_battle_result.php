@@ -39,7 +39,7 @@ try {
         'TableName' => 'BattleResults',
         'Item' => $item,
     ]);
-    echo json_encode(['status' => 'success', 'message' => 'Sonuç DynamoDB\'ye kaydedildi']);
+    echo json_encode(['status' => 'success', 'message' => 'Result DynamoDB\'ye Saved']);
 } catch (AwsException $e) {
     http_response_code(500);
     error_log($e->getMessage());
