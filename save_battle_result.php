@@ -34,6 +34,7 @@ $item = [
     'loser' => ['S' => $loser],
 ];
 
+
 try {
     $client->putItem([
         'TableName' => 'BattleResults',
